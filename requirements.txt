@@ -1,17 +1,24 @@
+# === DEPENDENCIAS PRINCIPALES DEL PROYECTO ===
+
 # Generación de documentos Word
-python-docx==1.1.2
+python-docx==1.2.0
 
 # Extracción de PDFs con LlamaParse
-llama-cloud-services
+llama-cloud-services==0.6.88
 
 # API de OpenAI para ChatGPT
-openai>=1.0.0
+openai==2.12.0
 
 # Manejo de variables de entorno
-python-dotenv
+python-dotenv==1.2.1
 
 # Para crear ejecutables standalone
-pyinstaller>=5.0
+pyinstaller==6.17.0
 
-# Utilidades
-pathlib2; python_version<"3.4"
+# === DEPENDENCIAS AUTOMÁTICAS (se instalan solas) ===
+# Las siguientes se instalan automáticamente con las de arriba:
+# - requests (para HTTP calls)
+# - aiohttp, asyncio libs (para LlamaParse)
+# - Pillow (para manejo de imágenes en docx)
+# - tenacity, httpx (para OpenAI)
+# - packaging, setuptools (utilidades)
