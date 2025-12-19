@@ -53,6 +53,14 @@ class CVGeneratorApp(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         
+        # DEBUG: Mostrar información del sistema
+        print("CWD:", os.getcwd())
+        print("ENV KEY:", os.getenv("OPENAI_API_KEY"))
+        print("LLAMA KEY:", os.getenv("LLAMA_CLOUD_API_KEY"))
+        print("SYS PLATFORM:", sys.platform)
+        print("EXECUTABLE:", sys.executable)
+        print("FROZEN:", getattr(sys, 'frozen', False))
+        
         self.title("CV Generator Pro")
         self.geometry("1000x750")
         self.configure(bg=COLORS["background"])
@@ -86,7 +94,7 @@ class CVGeneratorApp(tk.Tk):
             foreground="white",
             borderwidth=0,
             focuscolor="none",
-            font=("Segoe UI", 10, "bold"),
+            font=("Helvetica", 10, "bold"),
             padding=(20, 12)
         )
         style.map("Primary.TButton",
@@ -96,14 +104,14 @@ class CVGeneratorApp(tk.Tk):
         
         style.configure(
             "Title.TLabel",
-            font=("Segoe UI", 20, "bold"),
+            font=("Helvetica", 20, "bold"),
             foreground=COLORS["text"],
             background=COLORS["background"]
         )
         
         style.configure(
             "Subtitle.TLabel",
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
             foreground=COLORS["text_light"],
             background=COLORS["background"]
         )
@@ -151,7 +159,8 @@ class CVGeneratorApp(tk.Tk):
         self.pdf_entry = tk.Entry(
             pdf_input_frame,
             textvariable=self.pdf_path_var,
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
+            insertbackground="black",
             relief="solid",
             borderwidth=1,
             bg=COLORS["surface"]
@@ -164,7 +173,7 @@ class CVGeneratorApp(tk.Tk):
             command=self._choose_pdf,
             bg=COLORS["primary"],
             fg="white",
-            font=("Segoe UI", 9, "bold"),
+            font=("Helvetica", 9, "bold"),
             relief="flat",
             cursor="hand2",
             padx=15,
@@ -198,7 +207,7 @@ class CVGeneratorApp(tk.Tk):
         lang_label = tk.Label(
             lang_frame,
             text="Idioma del documento:",
-            font=("Segoe UI", 10, "bold"),
+            font=("Helvetica", 10, "bold"),
             bg=COLORS["surface"],
             fg=COLORS["text"]
         )
@@ -212,7 +221,7 @@ class CVGeneratorApp(tk.Tk):
             text="🇪🇸 Español",
             variable=self.language_var,
             value="es",
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
             bg=COLORS["surface"],
             fg=COLORS["text"],
             selectcolor=COLORS["surface"],
@@ -225,7 +234,7 @@ class CVGeneratorApp(tk.Tk):
             text="🇬🇧 English",
             variable=self.language_var,
             value="en",
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
             bg=COLORS["surface"],
             fg=COLORS["text"],
             selectcolor=COLORS["surface"],
@@ -242,7 +251,8 @@ class CVGeneratorApp(tk.Tk):
         self.output_entry = tk.Entry(
             output_frame,
             textvariable=self.output_dir_var,
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
+            insertbackground="black",
             relief="solid",
             borderwidth=1,
             bg=COLORS["surface"]
@@ -255,7 +265,7 @@ class CVGeneratorApp(tk.Tk):
             command=self._choose_output_dir,
             bg=COLORS["primary"],
             fg="white",
-            font=("Segoe UI", 9, "bold"),
+            font=("Helvetica", 9, "bold"),
             relief="flat",
             cursor="hand2",
             padx=15,
@@ -273,7 +283,7 @@ class CVGeneratorApp(tk.Tk):
             command=self._on_generate,
             bg=COLORS["secondary"],
             fg="white",
-            font=("Segoe UI", 14, "bold"),
+            font=("Helvetica", 14, "bold"),
             relief="flat",
             cursor="hand2",
             pady=15
@@ -287,7 +297,7 @@ class CVGeneratorApp(tk.Tk):
         status_label = tk.Label(
             status_frame,
             textvariable=self.status_var,
-            font=("Segoe UI", 9),
+            font=("Helvetica", 9),
             bg=COLORS["surface"],
             fg=COLORS["text_light"],
             anchor=tk.W,
@@ -327,6 +337,17 @@ class CVGeneratorApp(tk.Tk):
         self._append_console("=" * 80 + "\n")
         self._append_console("  CV GENERATOR PRO - Sistema de Generación Automática de CVs\n")
         self._append_console("=" * 80 + "\n\n")
+        
+        # Información de debug del sistema
+        self._append_console("🔧 INFORMACIÓN DEL SISTEMA:\n")
+        self._append_console(f"   📁 Directorio actual: {os.getcwd()}\n")
+        self._append_console(f"   🐍 Python: {sys.executable}\n")
+        self._append_console(f"   💻 Plataforma: {sys.platform}\n")
+        self._append_console(f"   📦 Ejecutable: {getattr(sys, 'frozen', False)}\n")
+        self._append_console(f"   🔑 OpenAI Key: {'✅ Configurada' if os.getenv('OPENAI_API_KEY') else '❌ No encontrada'}\n")
+        self._append_console(f"   🦙 Llama Key: {'✅ Configurada' if os.getenv('LLAMA_CLOUD_API_KEY') else '❌ No encontrada'}\n")
+        self._append_console("\n")
+        
         self._append_console("✅ Sistema inicializado correctamente\n")
         self._append_console("📌 Selecciona un PDF y configura los parámetros para comenzar\n")
         self._append_console("\n💡 Tips:\n")
@@ -348,7 +369,7 @@ class CVGeneratorApp(tk.Tk):
         title_label = tk.Label(
             header,
             text=title,
-            font=("Segoe UI", 11, "bold"),
+            font=("Helvetica", 11, "bold"),
             bg=COLORS["surface"],
             fg=COLORS["text"]
         )
@@ -366,7 +387,7 @@ class CVGeneratorApp(tk.Tk):
         label = tk.Label(
             row,
             text=label_text,
-            font=("Segoe UI", 10, "bold"),
+            font=("Helvetica", 10, "bold"),
             bg=COLORS["surface"],
             fg=COLORS["text"]
         )
@@ -375,7 +396,8 @@ class CVGeneratorApp(tk.Tk):
         entry = tk.Entry(
             row,
             textvariable=variable,
-            font=("Segoe UI", 10),
+            font=("Helvetica", 10),
+            insertbackground="black",
             relief="solid",
             borderwidth=1,
             bg=COLORS["surface"]
@@ -386,7 +408,7 @@ class CVGeneratorApp(tk.Tk):
             hint = tk.Label(
                 row,
                 text=placeholder,
-                font=("Segoe UI", 8),
+                font=("Helvetica", 8),
                 bg=COLORS["surface"],
                 fg=COLORS["text_light"]
             )
