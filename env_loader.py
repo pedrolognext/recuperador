@@ -30,3 +30,4 @@ def load_env_for_app():
 
 # Cargar automáticamente cuando se importa este módulo
 load_env_for_app()
+print("🔥 env_loader IMPORTADO")

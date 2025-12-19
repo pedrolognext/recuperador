@@ -4,11 +4,11 @@ Flujo: PDF -> LlamaParse -> ChatGPT -> Word
 """
 import os
 import sys
+import env_loader
 from pathlib import Path
 from services import extract_text_from_pdf, structure_cv_with_chatgpt, validate_cv_data
 from gemini import generate_cv
-# Cargar variables de entorno desde ubicación estándar
-import env_loader
+
 
 # Debug final
 print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))

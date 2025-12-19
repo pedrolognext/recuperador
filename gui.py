@@ -10,6 +10,10 @@ import threading
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
+
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
+
 from main import process_cv_from_pdf
 
 # Configuración

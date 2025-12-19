@@ -3,12 +3,12 @@ Servicios para extraer información de PDFs y estructurarla con ChatGPT
 """
 import os
 import asyncio
+import env_loader
 import json
 from pathlib import Path
 from llama_cloud_services import LlamaParse
 from openai import OpenAI
-# Cargar variables de entorno desde ubicación estándar
-import env_loader
+
 
 
 # --------------------------------------------------------------------------
