@@ -11,6 +11,25 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def get_app_data_dir(app_name="CV_Generator_Pro"):
+    if sys.platform == "darwin":  # macOS
+        base = Path.home() / "Library" / "Application Support"
+    elif sys.platform == "win32":  # Windows
+        base = Path(os.environ.get("APPDATA", Path.home()))
+    else:  # Linux
+        base = Path.home() / ".local" / "share"
+
+    app_dir = base / app_name
+    app_dir.mkdir(parents=True, exist_ok=True)
+    return app_dir
+
+
+def resource_path(relative_path):
+    """Obtiene rutas correctas para PyInstaller"""
+    if hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS) / relative_path
+    return Path(relative_path)
+
 
 def process_cv_from_pdf(pdf_path, logo_path="logo.png", output_path=None, language="es", custom_reference=None, custom_name=None):
     """
@@ -38,7 +57,9 @@ def process_cv_from_pdf(pdf_path, logo_path="logo.png", output_path=None, langua
         return None
     
     # Validar que existe el logo
-    logo_file = Path(logo_path)
+    logo_file = resource_path(logo_path)
+    logo_path = str(logo_file)
+
     if not logo_file.exists():
         print(f"⚠️  Advertencia: No se encontró el logo: {logo_path}")
         print(f"   El documento se generará sin logo")
@@ -82,11 +103,16 @@ def process_cv_from_pdf(pdf_path, logo_path="logo.png", output_path=None, langua
         )
         
         # Determinar nombre del archivo de salida
+        app_dir = get_app_data_dir()
+        output_dir = app_dir / "output"
+        output_dir.mkdir(exist_ok=True)
+
         if output_path is None:
-            # Generar nombre basado en el nombre del candidato
             candidate_name = structured_data['profile_data']['name']
             safe_name = candidate_name.replace(" ", "_")
-            output_path = f"CV_{safe_name}.docx"
+            output_path = output_dir / f"CV_{safe_name}.docx"
+        else:
+            output_path = Path(output_path)
         
         # Guardar documento
         doc.save(output_path)
