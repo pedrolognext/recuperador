@@ -29,7 +29,7 @@ def extract_text_from_pdf(pdf_path, output_dir="temp_output", language="es"):
         str: Texto extraído del PDF
     """
     # Configurar API key
-    api_key = os.getenv("LLAMA_CLOUD_API_KEY", "llx-9d8qZlBPbUKeIagnlVNGxipu1tTXr4blZ2mpasg4uQ8VBZcS")
+    api_key = os.getenv("LLAMA_CLOUD_API_KEY")
     
     # Crear parser
     parser = LlamaParse(
