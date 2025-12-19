@@ -7,9 +7,12 @@ import sys
 from pathlib import Path
 from services import extract_text_from_pdf, structure_cv_with_chatgpt, validate_cv_data
 from gemini import generate_cv
-from dotenv import load_dotenv
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
 
-load_dotenv()
+# Debug final
+print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))
+print("LLAMA_CLOUD_API_KEY =", os.getenv("LLAMA_CLOUD_API_KEY"))
 
 def get_app_data_dir(app_name="CV_Generator_Pro"):
     if sys.platform == "darwin":  # macOS

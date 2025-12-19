@@ -7,9 +7,8 @@ import json
 from pathlib import Path
 from llama_cloud_services import LlamaParse
 from openai import OpenAI
-from dotenv import load_dotenv
-
-load_dotenv()
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
 
 
 # --------------------------------------------------------------------------

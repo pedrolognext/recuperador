@@ -5,9 +5,8 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from dotenv import load_dotenv
-
-load_dotenv()
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
 
 # --------------------------------------------------------------------------
 # DICCIONARIOS DE TEXTOS POR IDIOMA
