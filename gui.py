@@ -181,6 +181,8 @@ class CVGeneratorApp(tk.Tk):
             command=self._choose_pdf,
             bg=COLORS["primary"],
             fg="white",
+            activebackground=COLORS["primary_dark"],
+            activeforeground="white",  # 🔑 Para macOS
             font=("Helvetica", 9, "bold"),
             relief="flat",
             cursor="hand2",
@@ -232,6 +234,7 @@ class CVGeneratorApp(tk.Tk):
             font=("Helvetica", 10),
             bg=COLORS["surface"],
             fg=COLORS["text"],
+            activeforeground=COLORS["text"],  # 🔑 Para macOS
             selectcolor=COLORS["surface"],
             activebackground=COLORS["surface"],
             cursor="hand2"
@@ -245,6 +248,7 @@ class CVGeneratorApp(tk.Tk):
             font=("Helvetica", 10),
             bg=COLORS["surface"],
             fg=COLORS["text"],
+            activeforeground=COLORS["text"],  # 🔑 Para macOS
             selectcolor=COLORS["surface"],
             activebackground=COLORS["surface"],
             cursor="hand2"
@@ -274,6 +278,8 @@ class CVGeneratorApp(tk.Tk):
             command=self._choose_output_dir,
             bg=COLORS["primary"],
             fg="white",
+            activebackground=COLORS["primary_dark"],
+            activeforeground="white",  # 🔑 Para macOS
             font=("Helvetica", 9, "bold"),
             relief="flat",
             cursor="hand2",
@@ -292,6 +298,8 @@ class CVGeneratorApp(tk.Tk):
             command=self._on_generate,
             bg=COLORS["secondary"],
             fg="white",
+            activebackground="#059669",  # Verde más oscuro
+            activeforeground="white",  # 🔑 Para macOS
             font=("Helvetica", 14, "bold"),
             relief="flat",
             cursor="hand2",
