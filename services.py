@@ -2,12 +2,16 @@
 Servicios para extraer información de PDFs y estructurarla con ChatGPT
 """
 import os
+import sys
 import asyncio
-import env_loader
 import json
 from pathlib import Path
 from llama_cloud_services import LlamaParse
 from openai import OpenAI
+
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
+from env_loader import get_app_temp_dir
 
 
 
@@ -15,13 +19,12 @@ from openai import OpenAI
 # SERVICIO 1: Extracción de PDF con LlamaParse
 # --------------------------------------------------------------------------
 
-def extract_text_from_pdf(pdf_path, output_dir="temp_output", language="es"):
+def extract_text_from_pdf(pdf_path, language="es"):
     """
     Extrae texto plano de un PDF usando LlamaParse
     
     Args:
         pdf_path: Ruta al archivo PDF
-        output_dir: Directorio temporal para guardar resultados
         language: Idioma del PDF ("es" para español, "en" para inglés)
     
     Returns:
@@ -38,8 +41,8 @@ def extract_text_from_pdf(pdf_path, output_dir="temp_output", language="es"):
         language=language  # Usar idioma seleccionado
     )
     
-    # Crear directorio de salida
-    output_path = Path(output_dir)
+    # ✅ Directorio temporal correcto (Application Support)
+    output_path = get_app_temp_dir() / "pdf_extract"
     output_path.mkdir(exist_ok=True, parents=True)
     
     # Ejecutar parsing asíncrono

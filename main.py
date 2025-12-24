@@ -4,27 +4,21 @@ Flujo: PDF -> LlamaParse -> ChatGPT -> Word
 """
 import os
 import sys
-import env_loader
 from pathlib import Path
 from services import extract_text_from_pdf, structure_cv_with_chatgpt, validate_cv_data
 from gemini import generate_cv
 
+# Cargar variables de entorno desde ubicación estándar
+import env_loader
+from env_loader import get_app_base_dir
 
 # Debug final
 print("OPENAI_API_KEY =", os.getenv("OPENAI_API_KEY"))
 print("LLAMA_CLOUD_API_KEY =", os.getenv("LLAMA_CLOUD_API_KEY"))
 
+# Usar la función centralizada
 def get_app_data_dir(app_name="CV_Generator_Pro"):
-    if sys.platform == "darwin":  # macOS
-        base = Path.home() / "Library" / "Application Support"
-    elif sys.platform == "win32":  # Windows
-        base = Path(os.environ.get("APPDATA", Path.home()))
-    else:  # Linux
-        base = Path.home() / ".local" / "share"
-
-    app_dir = base / app_name
-    app_dir.mkdir(parents=True, exist_ok=True)
-    return app_dir
+    return get_app_base_dir(app_name)
 
 
 def resource_path(relative_path):

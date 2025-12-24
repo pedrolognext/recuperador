@@ -1,23 +1,33 @@
 """
-Módulo centralizado para cargar variables de entorno
+Módulo centralizado para cargar variables de entorno y gestionar directorios
 """
 import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
+def get_app_base_dir(app_name="CV_Generator_Pro"):
+    """Obtiene el directorio base de la aplicación según el sistema operativo"""
+    if sys.platform == "darwin":  # macOS
+        base = Path.home() / "Library" / "Application Support"
+    elif sys.platform == "win32":  # Windows
+        base = Path(os.environ.get("APPDATA", Path.home()))
+    else:  # Linux
+        base = Path.home() / ".config"
+
+    app_dir = base / app_name
+    app_dir.mkdir(parents=True, exist_ok=True)
+    return app_dir
+
+def get_app_temp_dir(app_name="CV_Generator_Pro"):
+    """Obtiene el directorio temporal de la aplicación"""
+    temp_dir = get_app_base_dir(app_name) / "temp"
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    return temp_dir
+
 def load_env_for_app():
     """Carga el archivo .env desde la ubicación estándar del sistema"""
-    # 1️⃣ ruta estándar mac / win / linux
-    if sys.platform == "darwin":
-        env_path = Path.home() / "Library" / "Application Support" / "CV_Generator_Pro" / ".env"
-    elif sys.platform == "win32":
-        env_path = Path(os.environ.get("APPDATA", Path.home())) / "CV_Generator_Pro" / ".env"
-    else:
-        env_path = Path.home() / ".config" / "CV_Generator_Pro" / ".env"
-
-    # Crear directorio si no existe
-    env_path.parent.mkdir(parents=True, exist_ok=True)
+    env_path = get_app_base_dir() / ".env"
     
     if env_path.exists():
         load_dotenv(env_path)

@@ -13,11 +13,12 @@ from pathlib import Path
 
 # Cargar variables de entorno desde ubicación estándar
 import env_loader
+from env_loader import get_app_base_dir
 
 from main import process_cv_from_pdf
 
-# Configuración
-CONFIG_FILE = os.path.join(os.path.dirname(sys.executable if getattr(sys, 'frozen', False) else __file__), ".cv_generator_config.json")
+# Configuración - usar Application Support en lugar de directorio del ejecutable
+CONFIG_FILE = get_app_base_dir() / ".cv_generator_config.json"
 LOGO_FILE = "logo.png"
 
 # Colores del tema profesional
@@ -36,7 +37,7 @@ COLORS = {
 
 
 def load_config() -> dict:
-    if os.path.isfile(CONFIG_FILE):
+    if CONFIG_FILE.exists():
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
@@ -47,6 +48,8 @@ def load_config() -> dict:
 
 def save_config(cfg: dict) -> None:
     try:
+        # Asegurar que el directorio existe
+        CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
         with open(CONFIG_FILE, "w", encoding="utf-8") as f:
             json.dump(cfg, f, ensure_ascii=False, indent=2)
     except Exception:

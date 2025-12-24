@@ -639,12 +639,12 @@ def generate_cv(logo_path, profile_data=None, experience_list=None, education_li
 if __name__ == "__main__":
     doc_final = generate_cv('logo.png')
     
-    # Guardar el documento en un archivo
-    output_filename = "CV_Luis_Javier_Jimenez_Navarro.docx"
-    doc_final.save(output_filename)
-    print(f"✅ CV generado exitosamente: {output_filename}")
+    # NOTA: El guardado se hace en main.py usando rutas correctas de Application Support
+    # No guardamos aquí para evitar problemas de permisos en macOS
     
     # También guardarlo en BytesIO para uso programático si es necesario
     output_stream = io.BytesIO()
     doc_final.save(output_stream)
     output_stream.seek(0)
+    
+    print(f"✅ CV generado exitosamente (documento en memoria)")
