@@ -170,7 +170,8 @@ class CVGeneratorApp(tk.Tk):
             insertbackground="black",
             relief="solid",
             borderwidth=1,
-            bg=COLORS["surface"]
+            bg=COLORS["surface"],
+            fg=COLORS["text"]  # 🔑 CLAVE para macOS
         )
         self.pdf_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, ipady=8, padx=(0, 10))
         
@@ -262,7 +263,8 @@ class CVGeneratorApp(tk.Tk):
             insertbackground="black",
             relief="solid",
             borderwidth=1,
-            bg=COLORS["surface"]
+            bg=COLORS["surface"],
+            fg=COLORS["text"]  # 🔑 CLAVE para macOS
         )
         self.output_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, ipady=8, padx=(0, 10))
         
@@ -407,7 +409,8 @@ class CVGeneratorApp(tk.Tk):
             insertbackground="black",
             relief="solid",
             borderwidth=1,
-            bg=COLORS["surface"]
+            bg=COLORS["surface"],
+            fg=COLORS["text"]  # 🔑 CLAVE para macOS
         )
         entry.pack(fill=tk.X, ipady=8)
         
