@@ -1,10 +1,26 @@
 ## Para Windows:
-Para lanzar el .exe y que se cree hay que ir a powershell a la carpeta y abrir el entorno virtual que es: 
-PS C:\proyectos\recuperador> .\venv\bin\Activate.ps1
-Con el ya activo hacer: 
-pyinstaller --onefile --windowed --name=CV_Generator_Pro --add-data="logo.png;." gui.py
 
-Es importante que sea powershell.
+### 1. Crear entorno virtual:
+```powershell
+PS C:\proyectos\recuperador> python -m venv venv
+```
+
+### 2. Activar entorno virtual:
+```powershell
+PS C:\proyectos\recuperador> .\venv\Scripts\Activate.ps1
+```
+
+### 3. Instalar dependencias:
+```powershell
+(venv) PS C:\proyectos\recuperador> pip install -r requirements.txt
+```
+
+### 4. Compilar el ejecutable:
+```powershell
+(venv) PS C:\proyectos\recuperador> pyinstaller --onefile --windowed --name=CV_Generator_Pro --add-data="logo.png;." gui.py
+```
+
+⚠️ **ES IMPORTANTE QUE SEA POWERSHELL.**
 
 ## Para macOS:
 1. Instalar Python 3.x
@@ -33,11 +49,13 @@ El archivo ejecutable necesita un archivo `.env` con las claves de API y el arch
 ### 📁 Windows:
 Coloca **ambos archivos** en la **misma carpeta** que el archivo `CV_Generator_Pro.exe`:
 ```
-📁 Carpeta del ejecutable/
+📁 Carpeta del ejecutable/ (ej: dist/)
 ├── CV_Generator_Pro.exe
-├── .env
+├── .env                    ← AQUÍ (junto al .exe)
 └── logo.png
 ```
+
+**IMPORTANTE**: El .env debe estar **junto al .exe**, no en AppData.
 
 ### 📁 macOS:
 - **Archivo .env**: Crea en la carpeta de **Application Support**
