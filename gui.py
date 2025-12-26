@@ -95,17 +95,35 @@ class CVGeneratorApp(tk.Tk):
         style = ttk.Style()
         style.theme_use('clam')
         
+        # Estilo para botones pequeños (Seleccionar)
         style.configure(
             "Primary.TButton",
             background=COLORS["primary"],
             foreground="white",
             borderwidth=0,
             focuscolor="none",
-            font=("Helvetica", 10, "bold"),
-            padding=(20, 12)
+            font=("Helvetica", 9, "bold"),
+            padding=(12, 8)
         )
         style.map("Primary.TButton",
-            background=[("active", COLORS["primary_dark"])],
+            foreground=[("disabled", "#94a3b8"), ("active", "white"), ("!disabled", "white")],
+            background=[("disabled", "#cbd5e1"), ("active", COLORS["primary_dark"]), ("!disabled", COLORS["primary"])],
+            relief=[("pressed", "flat"), ("!pressed", "flat")]
+        )
+        
+        # Estilo para botón grande (GENERAR CV)
+        style.configure(
+            "Success.TButton",
+            background=COLORS["secondary"],
+            foreground="white",
+            borderwidth=0,
+            focuscolor="none",
+            font=("Helvetica", 14, "bold"),
+            padding=(14, 12)
+        )
+        style.map("Success.TButton",
+            foreground=[("disabled", "#94a3b8"), ("active", "white"), ("!disabled", "white")],
+            background=[("disabled", "#cbd5e1"), ("active", "#059669"), ("!disabled", COLORS["secondary"])],
             relief=[("pressed", "flat"), ("!pressed", "flat")]
         )
         
@@ -175,19 +193,12 @@ class CVGeneratorApp(tk.Tk):
         )
         self.pdf_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, ipady=8, padx=(0, 10))
         
-        pdf_btn = tk.Button(
+        pdf_btn = ttk.Button(
             pdf_input_frame,
             text="Seleccionar",
             command=self._choose_pdf,
-            bg=COLORS["primary"],
-            fg="white",
-            activebackground=COLORS["primary_dark"],
-            activeforeground="white",  # 🔑 Para macOS
-            font=("Helvetica", 9, "bold"),
-            relief="flat",
-            cursor="hand2",
-            padx=15,
-            pady=8
+            style="Primary.TButton",
+            cursor="hand2"
         )
         pdf_btn.pack(side=tk.LEFT)
         
@@ -272,19 +283,12 @@ class CVGeneratorApp(tk.Tk):
         )
         self.output_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, ipady=8, padx=(0, 10))
         
-        output_btn = tk.Button(
+        output_btn = ttk.Button(
             output_frame,
             text="Seleccionar",
             command=self._choose_output_dir,
-            bg=COLORS["primary"],
-            fg="white",
-            activebackground=COLORS["primary_dark"],
-            activeforeground="white",  # 🔑 Para macOS
-            font=("Helvetica", 9, "bold"),
-            relief="flat",
-            cursor="hand2",
-            padx=15,
-            pady=8
+            style="Primary.TButton",
+            cursor="hand2"
         )
         output_btn.pack(side=tk.LEFT)
         
@@ -292,20 +296,14 @@ class CVGeneratorApp(tk.Tk):
         generate_frame = tk.Frame(left_column, bg=COLORS["background"])
         generate_frame.pack(fill=tk.X, pady=20)
         
-        self.generate_btn = tk.Button(
+        self.generate_btn = ttk.Button(
             generate_frame,
             text="🚀 GENERAR CV",
             command=self._on_generate,
-            bg=COLORS["secondary"],
-            fg="white",
-            activebackground="#059669",  # Verde más oscuro
-            activeforeground="white",  # 🔑 Para macOS
-            font=("Helvetica", 14, "bold"),
-            relief="flat",
-            cursor="hand2",
-            pady=15
+            style="Success.TButton",
+            cursor="hand2"
         )
-        self.generate_btn.pack(fill=tk.X)
+        self.generate_btn.pack(fill=tk.X, ipady=5)
         
         # Status bar
         status_frame = tk.Frame(left_column, bg=COLORS["surface"], relief="solid", borderwidth=1)
@@ -496,7 +494,7 @@ class CVGeneratorApp(tk.Tk):
         
         # Preparar UI
         self.processing = True
-        self.generate_btn.configure(state=tk.DISABLED, bg=COLORS["text_light"])
+        self.generate_btn.state(["disabled"])  # ttk.Button usa state([...])
         self.status_var.set("⏳ Procesando...")
         self.console_text.delete("1.0", tk.END)
         
@@ -545,7 +543,7 @@ class CVGeneratorApp(tk.Tk):
     
     def _done(self, success: bool, message: str = "") -> None:
         self.processing = False
-        self.generate_btn.configure(state=tk.NORMAL, bg=COLORS["secondary"])
+        self.generate_btn.state(["!disabled"])  # ttk.Button usa state([...]) para habilitar
         
         if success:
             self.status_var.set("✅ Completado exitosamente")
