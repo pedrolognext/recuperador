@@ -26,26 +26,40 @@ Es importante que sea powershell.
 ⚠️ **IMPORTANTE**: En macOS NO usar --onefile porque python-docx no puede resolver las rutas de templates correctamente.
 El resultado será un `.app` que funciona como cualquier aplicación de Mac.
 
-## 🔑 Configuración del archivo .env
+## 🔑 Configuración de archivos necesarios
 
-El archivo ejecutable necesita un archivo `.env` con las claves de API. La ubicación depende del sistema operativo:
+El archivo ejecutable necesita un archivo `.env` con las claves de API y el archivo `logo.png`. La ubicación depende del sistema operativo:
 
 ### 📁 Windows:
-Coloca el archivo `.env` en la **misma carpeta** que el archivo `CV_Generator_Pro.exe`:
+Coloca **ambos archivos** en la **misma carpeta** que el archivo `CV_Generator_Pro.exe`:
 ```
 📁 Carpeta del ejecutable/
 ├── CV_Generator_Pro.exe
-└── .env
+├── .env
+└── logo.png
 ```
 
 ### 📁 macOS:
-Crea el archivo `.env` en la carpeta de **Application Support**:
+- **Archivo .env**: Crea en la carpeta de **Application Support**
+- **Archivo logo.png**: Coloca en la **misma carpeta** que `CV_Generator_Pro.app`
+
 ```
-~/Library/Application Support/CV_Generator_Pro/.env
+📁 Carpeta de la aplicación/
+├── CV_Generator_Pro.app
+└── logo.png
+
+📁 Application Support/
+└── CV_Generator_Pro/
+    └── .env
 ```
 
-**Ruta completa en macOS:**
+**Rutas completas en macOS:**
 ```
+# Logo (junto a la app)
+/ruta/donde/descargaste/CV_Generator_Pro.app
+/ruta/donde/descargaste/logo.png
+
+# .env (Application Support)
 /Users/[tu_usuario]/Library/Application Support/CV_Generator_Pro/.env
 ```
 
@@ -54,5 +68,10 @@ Crea el archivo `.env` en la carpeta de **Application Support**:
 OPENAI_API_KEY=sk-tu_clave_de_openai_aqui
 LLAMA_CLOUD_API_KEY=llx-tu_clave_de_llamacloud_aqui
 ```
+
+### 🖼️ Archivo logo.png:
+- Debe ser una imagen PNG
+- Se usa para el encabezado de los CVs generados
+- **IMPORTANTE**: Debe estar junto al ejecutable en ambos sistemas
 
 
